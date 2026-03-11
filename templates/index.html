@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Carbon Footprint Analyzer</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<h1>AI Carbon Footprint & Sustainability Analyzer</h1>
+
+<div class="container">
+
+<form action="/calculate" method="post">
+
+<label>Region</label>
+<input type="text" name="region" placeholder="Example: Region A" required>
+
+<label>Transport Type</label>
+<select name="transport">
+<option value="car">Car</option>
+<option value="bus">Bus</option>
+<option value="bike">Bike</option>
+</select>
+
+<label>Distance Travelled (km)</label>
+<input type="number" name="distance" required>
+
+<label>Electricity Usage (kWh)</label>
+<input type="number" name="electricity" required>
+
+<label>Fuel Consumption (Liters)</label>
+<input type="number" name="fuel" required>
+
+<button type="submit">Analyze Sustainability</button>
+
+</form>
+
+{% if emission %}
+
+<div class="result">
+
+<h2>Total Emission: {{emission}} kg CO₂</h2>
+
+<h3>Sustainability Risk: {{category}}</h3>
+
+<h3>Sustainability Score: {{score}} / 100</h3>
+
+<p><b>Recommendation:</b> {{recommendation}}</p>
+
+<p style="color:green;font-weight:bold;">
+{{ai_output}}
+</p>
+
+</div>
+
+<h2>Emission Breakdown</h2>
+
+<canvas id="carbonChart"></canvas>
+
+<script>
+
+const ctx = document.getElementById('carbonChart');
+
+new Chart(ctx, {
+type: 'pie',
+data: {
+labels: ['Transport','Electricity','Fuel'],
+datasets: [{
+data: [
+{{transport_emission}},
+{{electricity_emission}},
+{{fuel_emission}}
+]
+}]
+}
+});
+
+</script>
+
+{% endif %}
+
+<h2>Recent Sustainability Records</h2>
+
+<table border="1">
+
+<tr>
+<th>ID</th>
+<th>Transport</th>
+<th>Distance</th>
+<th>Electricity</th>
+<th>Emission</th>
+<th>Risk</th>
+</tr>
+
+{% for row in history %}
+
+<tr>
+<td>{{row[0]}}</td>
+<td>{{row[1]}}</td>
+<td>{{row[2]}}</td>
+<td>{{row[3]}}</td>
+<td>{{row[5]}}</td>
+<td>{{row[6]}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
