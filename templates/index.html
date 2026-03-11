@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 <title>AI Carbon Footprint Analyzer</title>
 
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -11,7 +12,16 @@
 
 <body>
 
+<div class="header">
+
 <h1>AI Carbon Footprint & Sustainability Analyzer</h1>
+
+<div class="user-controls">
+<span>Welcome User</span>
+<a href="/logout">Logout</a>
+</div>
+
+</div>
 
 <div class="container">
 
@@ -101,11 +111,11 @@ data: [
 
 <tr>
 <td>{{row[0]}}</td>
-<td>{{row[1]}}</td>
 <td>{{row[2]}}</td>
 <td>{{row[3]}}</td>
-<td>{{row[5]}}</td>
+<td>{{row[4]}}</td>
 <td>{{row[6]}}</td>
+<td>{{row[7]}}</td>
 </tr>
 
 {% endfor %}
